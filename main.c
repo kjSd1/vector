@@ -115,6 +115,43 @@ void test_vector_popBack() {
     //test_vector_popBack2();   // Vector is empty, code 1
 }
 
+void test_vector_atVectorFull() {
+    vector v = createVector(4);
+    pushBack(&v, 3);
+    pushBack(&v, 2);
+    pushBack(&v, 1);
+    int *ptrIndex = atVector(&v, 2);
+    assert(*ptrIndex == 1);
+}
+
+void test_vector_atVectorEmpty() {
+    vector v = createVector(0);
+    atVector(&v, 2);
+}
+
+void test_vector_atVector() {
+    test_vector_atVectorFull();
+    //test_vector_atVectorEmpty(); // IndexError: a[2] is not exists
+}
+
+void test_vector_back() {
+    vector v = createVector(0);
+    pushBack(&v, 3);
+    pushBack(&v, 2);
+    pushBack(&v, 1);
+    int *resultIndex = back(&v);
+    assert(*resultIndex ==  1);
+}
+
+void test_vector_front() {
+    vector v = createVector(0);
+    pushBack(&v, 3);
+    pushBack(&v, 2);
+    pushBack(&v, 1);
+    int *resultIndex = front(&v);
+    assert(*resultIndex == 3);
+}
+
 // Для некоторых функций не было написанно тестов, так как они повсеместно использовались в прошлых лабах,
 // 5а array.h ...
 void test_vector() {
@@ -123,6 +160,9 @@ void test_vector() {
     test_vector_pushBack();
     test_vector_popBack();
     test_vector_shrinkToFit();
+    test_vector_atVector();
+    test_vector_back();
+    test_vector_front();
 }
 
 int main() {

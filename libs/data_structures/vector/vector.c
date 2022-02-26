@@ -1,5 +1,13 @@
 #include "vector.h"
 
+void exitIfEmpty(vector *v) {
+    if (isEmpty(v)) {
+        fprintf(stderr, "Vector is empty");
+        exit(1);
+    }
+}
+//----------------------------------------------------------------------------------------------------------------------
+
 vector createVector(size_t n) {
     int *data = calloc(n, sizeof(int));
     if (data == NULL) {
@@ -61,10 +69,24 @@ void pushBack(vector *v, int x) {
 }
 
 void popBack(vector *v) {
-    if (isEmpty(v)) {
-        fprintf(stderr, "Vector is empty");
+     exitIfEmpty(v);
+     v->size--;
+}
+
+int* atVector(vector *v, size_t index) {
+    if (index >= v->size) {
+        fprintf(stderr, "IndexError: a[%d] is not exists", index);
         exit(1);
     }
-    else
-        v->size--;
+    return &v->data[index];
+}
+
+int* back(vector *v) {
+    exitIfEmpty(v);
+    return &v->data[v->size - 1];
+}
+
+int* front(vector *v) {
+    exitIfEmpty(v);
+    return &v->data[0];
 }

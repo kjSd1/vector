@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <memory.h>
 
 typedef struct vectorVoid {
     void *data;          // указатель на нулевой элемент вектора
@@ -32,5 +33,23 @@ void shrinkToFitV(vectorVoid *v);
 
 // Освобождает память, выделенную вектор
 void deleteVectorV(vectorVoid *v);
+
+// Возвращает 'истина' - если в векторе v нет элементов
+// иначе - 'ложь'
+bool isEmptyV(vectorVoid *v);
+
+// Возвращает 'истина' - если вектор v полон
+// иначе - 'ложь'
+bool isFullV(vectorVoid *v);
+
+// Записывает по адресу destination index-ый элемент вектора v
+void getVectorValueV(vectorVoid *v, size_t index, void *destination);
+
+// Записывает на index-ый элемент вектора v значение, расположенное по адресу source
+void setVectorValueV(vectorVoid *v, size_t index, void *source);
+
+void popBackV(vectorVoid *v);
+
+void pushBackV(vectorVoid *v, void *source);
 
 #endif //VECTOR_VECTORVOID_H

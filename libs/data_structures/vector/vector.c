@@ -27,6 +27,7 @@ void reserve(vector *v, size_t newCapacity) {
             exit(2);
         }
     }
+
     v->capacity = newCapacity;
     if (v->size > v->capacity)
         v->size = v->capacity;
@@ -63,7 +64,7 @@ int getVectorValue(vector *v, size_t i) {
 void pushBack(vector *v, int x) {
     if (v->capacity == 0)
         reserve(v, 1);
-    if (isFull(v))
+    else if (isFull(v))
         reserve(v, v->capacity * 2);
     v->data[v->size++] = x;
 }

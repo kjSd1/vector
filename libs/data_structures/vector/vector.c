@@ -29,9 +29,42 @@ void clear(vector *v) {
 }
 
 void shrinkToFit(vector *v) {
-    v->data = (int*)realloc(v->data, v->size * sizeof(int));
+    reserve(v, v->size);
 }
 
 void deleteVector(vector *v) {
     free(v->data);
+    v->data = NULL;
+    v->size = 0;
+    v->capacity = 0;
+}
+
+bool isEmpty(vector *v) {
+    return v->size == 0;
+}
+
+bool isFull(vector *v) {
+    return v->size == v->capacity;
+}
+
+int getVectorValue(vector *v, size_t i) {
+    assert(v->size < i);
+    return v->data[i];
+}
+
+void pushBack(vector *v, int x) {
+    if (v->capacity == 0)
+        reserve(v, 1);
+    if (isFull(v))
+        reserve(v, v->capacity * 2);
+    v->data[v->size++] = x;
+}
+
+void popBack(vector *v) {
+    if (isEmpty(v)) {
+        fprintf(stderr, "Vector is empty");
+        exit(1);
+    }
+    else
+        v->size--;
 }

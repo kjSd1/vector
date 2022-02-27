@@ -19,6 +19,7 @@ vector createVector(size_t n);
 void reserve(vector *v, size_t newCapacity);
 
 // Очистка элементов, без освобождения памяти вектора v
+// Если новый размер 0, то указатель вектора = NULL
 void clear(vector *v);
 
 // Освобождает неиспользуемую память вектора v

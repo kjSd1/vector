@@ -49,14 +49,14 @@ bool isFullV(vectorVoid *v) {
 }
 
 void getVectorValueV(vectorVoid *v, size_t index, void *destination) {
-    if (index > v->size)
+    if (index >= v->size)
         fprintf(stderr, "IndexError: a[%d] is not exists", index);
     char *source = (char*)v->data + index * v->baseTypeSize;
     memcpy(destination, source, v->baseTypeSize);
 }
 
 void setVectorValueV(vectorVoid *v, size_t index, void *source) {
-    if (index > v->size)
+    if (index >= v->size)
         fprintf(stderr, "IndexError: a[%d] is not exists", index);
     char *destination = (char*)v->data + index * v->baseTypeSize;
     memcpy(destination, source, v->baseTypeSize);
@@ -67,7 +67,8 @@ void pushBackV(vectorVoid *v, void *source) {
         reserveV(v, 1);
     else if (isFullV(v))
         reserveV(v, v->capacity * 2);
-    setVectorValueV(v, v->size++, source);
+    v->size++;
+    setVectorValueV(v, v->size - 1, source);
 }
 
 void popBackV(vectorVoid *v) {

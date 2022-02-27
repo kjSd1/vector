@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <D:/_Work/_GitHub/vector/libs/data_structures/vector/vector.h>
+#include <D:/_Work/_GitHub/vector/libs/data_structures/vectorVoid/vectorVoid.h>
 #include <stdint.h>
 
 void test_vector_creatVector_sizeMax() {
@@ -11,6 +12,7 @@ void test_vector_creatVector_notBigCapacity() {
     assert(v.data != NULL);
     assert(v.size == 0);
     assert(v.capacity == 5);
+    deleteVector(&v);
 }
 
 void test_vector_creatVector_zeroCapacity() {
@@ -18,6 +20,7 @@ void test_vector_creatVector_zeroCapacity() {
     assert(v.data != NULL);
     assert(v.size == 0);
     assert(v.capacity == 0);
+    deleteVector(&v);
 }
 
 void test_vector_creatVector() {
@@ -32,6 +35,7 @@ void test_vector_reserve_emptyVector() {
     assert(v.capacity == 2);
     assert(v.data != NULL);
     assert(v.size == 0);
+    deleteVector(&v);
 }
 
 void test_vector_reserve_notBigNumberCapacity() {
@@ -40,6 +44,7 @@ void test_vector_reserve_notBigNumberCapacity() {
     assert(v.capacity == 0);
     assert(v.data == NULL);
     assert(v.size == 0);
+    deleteVector(&v);
 }
 
 void test_vector_reserve_sizeMaxChange() {
@@ -48,6 +53,7 @@ void test_vector_reserve_sizeMaxChange() {
     assert(v.capacity == 0);
     assert(v.data != NULL);
     assert(v.size == 0);
+    deleteVector(&v);
 }
 
 void test_vector_reserve() {
@@ -64,6 +70,7 @@ void test_vector_pushBack_emptyVectorAndFullVector() {
     assert(v.data != NULL);
     assert(v.size == 3);
     assert(v.capacity == 4);
+    deleteVector(&v);
 }
 
 void test_vector_pushBack() {
@@ -77,6 +84,7 @@ void test_vector_shrinkToFit_notEmptyVector() {
     assert(v.data != NULL);
     assert(v.size == 1);
     assert(v.capacity == 1);
+    deleteVector(&v);
 }
 
 void test_vector_shrinkToFit_emptyVector() {
@@ -85,6 +93,7 @@ void test_vector_shrinkToFit_emptyVector() {
     assert(v.data == NULL);
     assert(v.size == 0);
     assert(v.capacity == 0);
+    deleteVector(&v);
 }
 
 void test_vector_shrinkToFit() {
@@ -103,6 +112,7 @@ void test_vector_popBack_notEmptyVector() {
     assert(v.capacity == 5);
     assert(v.data[0] == 3);
     assert(v.data[1] == 2);
+    deleteVector(&v);
 }
 
 void test_vector_popBack_emptyVector() {
@@ -122,6 +132,7 @@ void test_vector_atVector_fullVector() {
     pushBack(&v, 1);
     int *ptrIndex = atVector(&v, 2);
     assert(*ptrIndex == 1);
+    deleteVector(&v);
 }
 
 void test_vector_atVector_emptyVector() {
@@ -141,6 +152,7 @@ void test_vector_back_notBigSizeVector() {
     pushBack(&v, 1);
     int *resultIndex = back(&v);
     assert(*resultIndex ==  1);
+    deleteVector(&v);
 }
 
 void test_vector_back_fullVector() {
@@ -151,6 +163,7 @@ void test_vector_back_fullVector() {
     pushBack(&v, 6);
     int *resultIndex = back(&v);
     assert(*resultIndex ==  6);
+    deleteVector(&v);
 }
 
 void test_vector_back_emptyVector() {
@@ -177,6 +190,7 @@ void test_vector_front_fullVector() {
     pushBack(&v, 6);
     int *resultIndex = front(&v);
     assert(*resultIndex == 3);
+    deleteVector(&v);
 }
 
 void test_vector_front() {
@@ -197,8 +211,152 @@ void test_vector() {
     test_vector_front();
 }
 
-int main() {
+void test_vectorVoid_creatVector() {
+    vectorVoid v = createVectorV(4, sizeof(char));
+    assert(&v.data[0] + 1 == &v.data[1]);
+    deleteVectorV(&v);
+}
+
+void test_vectorVoid_reserve_emptyVector() {
+    vectorVoid v = createVectorV(2, sizeof(float));
+    reserveV(&v, 6);
+    assert(v.capacity == 6);
+    deleteVectorV(&v);
+}
+
+void test_vectorVoid_reserve_decreaseCapacity() {
+    vectorVoid v = createVectorV(4, sizeof(float));
+    int a = 1;
+    int b = 2;
+    int c = 3;
+    pushBackV(&v, &a);
+    pushBackV(&v, &b);
+    pushBackV(&v, &c);
+    assert(!isFullV(&v));
+    reserveV(&v, 2);
+    assert(isFullV(&v));
+    deleteVectorV(&v);
+}
+
+void test_vectorVoid_reserve() {
+    test_vectorVoid_reserve_emptyVector();
+    test_vectorVoid_reserve_decreaseCapacity();
+}
+
+void test_vectorVoid_pushBackVAndGetVectorValueV_Int() {
+    size_t n;
+    scanf("%zd", &n);
+
+    vectorVoid v = createVectorV(0, sizeof(int));
+    for (int i = 0; i < n; i++) {
+        int x;
+        scanf("%d", &x);
+        pushBackV(&v, &x);
+    }
+
+    for (int i = 0; i < n; i++) {
+        int x;
+        getVectorValueV(&v, i, &x);
+        printf("%d ", x);
+    }
+    deleteVectorV(&v);
+}
+
+void test_vectorVoid_pushBackVAndGetVectorValueV_Float() {
+    size_t n;
+    scanf("%zd", &n);
+
+    vectorVoid v = createVectorV(0, sizeof(float));
+    for (int i = 0; i < n; i++) {
+        float x;
+        scanf("%f", &x);
+        pushBackV(&v, &x);
+    }
+
+    for (int i = 0; i < n; i++) {
+        float x;
+        getVectorValueV(&v, i, &x);
+        printf("%f ", x);
+    }
+    deleteVectorV(&v);
+}
+
+void test_vectorVoid_getVectorValueV_Error1() {
+    vectorVoid v = createVectorV(3, sizeof(int));
+    int a = 1;
+    int b = 2;
+
+    pushBackV(&v, &a);
+    pushBackV(&v, &b);
+
+    int result;
+    getVectorValueV(&v, 2, &result);
+}
+
+void test_vectorVoid_getVectorValueV_Error2() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+
+    int result;
+    getVectorValueV(&v, 0, &result);
+}
+
+void test_vectorVoid_setVectorValueV_EmptyVectorError() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+
+    int add = 2;
+    setVectorValueV(&v, 0, &add);
+}
+
+void test_vectorVoid_setVectorValueV_FullVector() {
+    vectorVoid v = createVectorV(0, sizeof(int));
+
+    int add1 = 1;
+    pushBackV(&v, &add1);
+    int add2 = 2;
+    pushBackV(&v, &add2);
+    int add3 = 3;
+    pushBackV(&v, &add3);
+
+    int change = 99;
+    setVectorValueV(&v, 0, &change);
+
+    int result;
+    getVectorValueV(&v, 0, &result);
+    assert(result == 99);
+    assert(v.capacity == 4);
+    assert(v.size == 3);
+    deleteVectorV(&v);
+}
+
+
+void test_vectorVoid_setVectorValueV() {
+    //test_vectorVoid_setVectorValueV_EmptyVectorError(); // IndexError: a[0] is not exist - Работа корректна
+    test_vectorVoid_setVectorValueV_FullVector();
+}
+
+void test_vectorVoid() {
+    test_vectorVoid_creatVector();
+    test_vectorVoid_reserve();
+
+    //test_vectorVoid_pushBackVAndGetVectorValueV_Int(); // Работа корректна
+    //test_vectorVoid_pushBackVAndGetVectorValueV_Float(); // Работа корректна
+    //test_vectorVoid_getVectorValueV_Error1(); // IndexError: a[2] is not exists - Работа корректна
+    //test_vectorVoid_getVectorValueV_Error2(); // IndexError: a[0] is not exists - Работа корректна
+    test_vectorVoid_setVectorValueV();
+
+    // isFull и isEmpty и clearV - практически идентичны функциям vector
+    // shrinkToFit(); // При усливии правильный работы reserve работает правильно
+    // Так как такая же как и в vector
+}
+
+void test() {
     test_vector();
+    test_vectorVoid();
+}
+
+
+int main() {
+    test();
 
     return 0;
 }

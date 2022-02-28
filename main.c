@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <D:/_Work/_GitHub/vector/libs/data_structures/vector/vector.h>
 #include <D:/_Work/_GitHub/vector/libs/data_structures/vectorVoid/vectorVoid.h>
+#include <D:/_Work/_GitHub/vector/libs/data_structures/matrix/matrix.h>
 #include <stdint.h>
 
 void test_vector_creatVector_sizeMax() {
@@ -349,11 +350,22 @@ void test_vectorVoid() {
     // Так как такая же как и в vector
 }
 
-void test() {
-    test_vector();
-    test_vectorVoid();
+
+void test_matrix_inputOutput() {
+    matrix *matrix1 = getMemArrayOfMatrices(3, 3, 3);
+    inputMatrices(matrix1, 3);
+    outputMatrices(matrix1, 3);
 }
 
+void test_matrix() {
+    test_matrix_inputOutput();
+}
+
+void test() {
+    //test_vector();
+    //test_vectorVoid();
+    test_matrix();
+}
 
 int main() {
     test();
